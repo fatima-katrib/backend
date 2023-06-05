@@ -62,13 +62,16 @@ export const verifyToken = async (req, res, next) => {
   }
 };
 
-export const allowedAccess = (rolesAllowed) => {
-  if (rolesAllowed.includes(req.user.role)) {
-    return next();
-  } else {
-    return res.status(401).json({ message: "Not Authorized" });
+export const allowedAccess=(arr)=>{
+  return (req,res,next)=>{
+      if(arr.includes(req.user.role)){
+          next()
+      }else{
+          return res.status(403).send({success:false, message:"Access denied"})
+      }
   }
-};
+
+}
 
 export const checkRequesterId = (req, res, next) => {
   if (req.user.role === "admin") {

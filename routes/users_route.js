@@ -25,8 +25,8 @@ router.get("/", getAll);
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
-router.delete("/:id", del);
-router.patch("/edit/:id", verifyToken, update);
+router.delete("/:id", verifyToken, allowedAccess("admin"), del);
+router.patch("/edit/:id", verifyToken, allowedAccess("admin"), update);
 router.patch("/self-edit/:id", verifyToken, checkRequesterId, update);
 
 export default router;
